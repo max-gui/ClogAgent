@@ -1,35 +1,5 @@
 # angular-seed — the seed for AngularJS apps
-
-This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
-You can use it to quickly bootstrap your angular webapp projects and dev environment for these
-projects.
-
-The seed contains a sample AngularJS application and is preconfigured to install the Angular
-framework and a bunch of development and testing tools for instant web development gratification.
-
-The seed app doesn't do much, just shows how to wire two controllers and views together.
-
-
-## Getting Started
-
-To get you started you can simply clone the angular-seed repository and install the dependencies:
-
-### Prerequisites
-
-You need git to clone the angular-seed repository. You can get it from
-[http://git-scm.com/](http://git-scm.com/).
-
-We also use a number of node.js tools to initialize and test angular-seed. You must have node.js and
-its package manager (npm) installed.  You can get them from [http://nodejs.org/](http://nodejs.org/).
-
-### Clone angular-seed
-
-Clone the angular-seed repository using [git][git]:
-
-```
-git clone https://github.com/angular/angular-seed.git
-cd angular-seed
-```
+# this project is for ctrip internal tools,help everyone to handle log interface more efficiently.
 
 ### Install Dependencies
 
@@ -65,6 +35,7 @@ npm start
 ```
 
 Now browse to the app at `http://localhost:8000/app/index.html`.
+And i prefer to use express as the web server,so please Browse at `http://localhost:8080/app/index.html`.
 
 
 
@@ -83,8 +54,9 @@ Now browse to the app at `http://localhost:8000/app/index.html`.
         filters.js      --> custom angular filters
         services.js     --> custom angular services
       partials/             --> angular view partials (partial html templates)
-        partial1.html
-        partial2.html
+      app.js            -->the nodejs application is defined here
+
+
 
     test/               --> test config and source files
       protractor-conf.js    --> config file for running e2e tests with Protractor
