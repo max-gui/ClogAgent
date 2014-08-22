@@ -7,11 +7,39 @@ angular.module('myApp.controllers', []).directive('popover', function() {
     elem.popover();
   }
 })
-.controller('homeCtrl', ['$scope','myData','$http',
-                         function($scope, myData, $http) {
+.controller('homeCtrl', ['$scope','myData','$http','$state','$filter',
+                         function($scope, myData, $http,$state,$filter) {
+                           /*
+                           $http.get('http://rest.logging.sh.ctriptravel.com/data/logs/340101',
+                                     {params:{
+                                       fromDate:'2014-08-19 20:45:20',
+                                       toDate:'2014-08-19 20:47:22',
+                                       logLevel:1,
+                                       hostName:'10.8.5.99',
+                                       tagKey:'logtype&tagValue=paymentinfo&tagKey=servicecode&tagValue=31000301'
+
+
+                                     },
+                                      timeout: 15000}).
+                            success(function(data) {
+                              if(data.Status == false){
+                                $state.go("login");
+                              }
+                            }).
+                            error(function(data,status){
+                              $state.go("login");
+                            });*/
+
                            var apiTemp = 340101;
-                           var fromDate:"2014-08-19 20:45:20";
-                           var toDate:"2014-08-19 20:47:22";
+                           var fromDate="2014-08-19%2020:45:20";
+                           var toDate="2014-08-19%2020:47:22";
+                           var logType = -1;//0-5&null
+                           var tags =
+                               [{tagKey:'logtype',
+                                 tagValue:'paymentinfo'},
+                                {tagKey:'servicecode',
+                                 tagValue:31000301}];
+
                            var serverIp =
                                ["10.8.5.99",
                                 "10.8.5.112",
@@ -20,44 +48,61 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                 "10.8.5.39",
                                 "10.8.5.44"
                                ]
-                           var tags =
-                               [{tagKey:'logtype',
-                                 tagValue:'paymentinfo'},
-                                {tagKey:'servicecode',
-                                 tagValue:31000301}];
                            var logLevel=
                                [2,3];
-                           var logType = 0;//0-5&null
 
-                           var url = 'http://rest.logging.sh.ctriptravel.com/data/logs/' + apiTemp
+                           var urlHead = 'http://rest.logging.sh.ctriptravel.com/data/logs/' + apiTemp + '?';
+                           var url = urlHead +
+                               'fromDate=' + fromDate +
+                               '&toDate=' + toDate;
+
+                           if (logType > -1){
+                             url = url +
+                               '&logType=' + logtype;
+                           }
 
                            tags.forEach(
-                                        function(data){
+                             function(data){
 
-                                          url =
-                                            url +
-                                            '&tagKey=' +
-                                            data.tagKey +
-                                            '&tagValue=' +
-                                            data.tagValue
-                                        }
-                                      );
-                           $http.get(url,
-                                     {
-                                       params:{
-                                         fromDate:"2014-08-19 20:45:20",
-                                         toDate:"2014-08-19 20:47:22",
-                                         hostName:'SH02SVR1860',
-                                         logLevel:1},
-                                       timeout: 15000}).
-                           success(function(data) {
-                             if(data.Status == false){
-                               $state.go("login");
+                               url =
+                                 url +
+                                 '&tagKey=' +
+                                 data.tagKey +
+                                 '&tagValue=' +
+                                 data.tagValue
                              }
-                           }).
-                           error(function(data,status){
-                             $state.go("login");
-                           });
+                           );
+
+                           var urlArr = [];
+                           logLevel.forEach(
+                             function(level){
+                               var urlTmp = url +
+                                   '&logLevel=' + level;
+                               urlArr.splice(0,0,urlTmp);
+                             }
+                           )
+
+                           serverIp.forEach(
+                             function(ip){
+                               urlArr.forEach(
+                                 function(urlE){
+                                   var urlTmp = urlE +
+                                       '&hostName=' + ip;
+
+                                   $http.get(urlTmp,{timeout: 30000}).
+                                   success(function(data) {
+                                     if(data.Status == false){
+                                       $state.go("login");
+                                     }
+                                   }).
+                                   error(function(data,status){
+                                     $state.go("login");
+                                   });
+                                 }
+                               )
+                             }
+                           )
+
                            /*
                             $http.get('http://rest.logging.sh.ctriptravel.com/data/logs/340101?fromDate=2014-08-19%2020:45:20&toDate=2014-08-19%2020:47:22&logLevel=1&hostName=SH02SVR1860&tagKey=logtype&tagValue=paymentinfo&tagKey=servicecode&tagValue=31000301',
                                       {timeout: 15000}).
@@ -69,7 +114,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                             error(function(data,status){
                               $state.go("login");
                             });*/
-                          }])
+                         }])
 .controller('funcCtrl', ['$scope', '$state', '$http','myData',
                          function($scope, $state, $http, myData) {
                            $scope.name = myData.name;
@@ -88,8 +133,8 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                            var encrypted = encrypt.encrypt(myData.password);
 
                            $http.post('http://win8dev/SycWeb/Login?userid=' + myData.name,
-                                                 JSON.stringify(encrypted),
-                                                 {timeout: 1500}).
+                                      JSON.stringify(encrypted),
+                                      {timeout: 1500}).
                            success(function(data) {
                              if(data.Status == false){
                                $state.go("login");
@@ -274,9 +319,9 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                   )
 
                                   var dataObj = {
-                                      "BoolValue":true,
-                                      "StringValue":"String content"
-                                    };
+                                    "BoolValue":true,
+                                    "StringValue":"String content"
+                                  };
 
                                   var json = JSON.stringify(dataObj);
 
@@ -384,7 +429,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                   });
                                 };
 
-                                  function mySortTIER_NO(a,b){
-                                    return b.tier_no  - a.tier_no ;
-                                  }
-                                }]);
+                                function mySortTIER_NO(a,b){
+                                  return b.tier_no  - a.tier_no ;
+                                }
+                              }]);

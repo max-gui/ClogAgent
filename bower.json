@@ -20,6 +20,7 @@
     "angular-ui-tree": "2.1.2",
     "ngInfiniteScroll": "1.0.0",
     "ui-sortable": "https://github.com/angular-ui/ui-sortable/raw/master/src/sortable.js",
-    "jsencrypt": "2.1.0"
+    "jsencrypt": "2.1.0",
+    "angular-encode-uri": "1.0.0"
   }
 }
