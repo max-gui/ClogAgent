@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-lg-4">
+        <div class="input-group">
+            <span class="input-group-addon">appId</span>
+            <input ng-model="apiTemp" type="text" class="form-control">
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+
+    <div class="col-lg-4">
+        <div class="input-group">
+            <span class="input-group-addon">开始</span>
+            <input ng-model="fromDate" type="datetime-local" class="form-control">
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-4">
+        <div class="input-group">
+            <span class="input-group-addon">结束</span>
+            <input ng-model="toDate" type="datetime-local" class="form-control">
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+</div>
+
+<div class="row">
+    <div class="col-lg-5">
+        <div class="input-group">
+            <span class="label label-default">日志级别</span>
+            <div class="btn-group" ng-repeat="level in LevelArray">
+                <input type="checkbox" ng-model="level.state"> {{level.name}}
+            </div>
+        </div><!-- /input-group -->
+    </div>
+
+    <div class="col-lg-7">
+        <div class="input-group">
+            <span class="label label-default">日志类型</span>
+            <div class="btn-group" ng-repeat="type in TypeArray">
+                <input type="radio" name="options" ng-model="logType.index" ng-value="{{$index}}"> {{type}}
+            </div>
+        </div><!-- /input-group -->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-6" ng-repeat="tdata in tabDataLR">
+        <div class="panel panel-default" >
+            <!-- Default panel contents -->
+            <div class="panel-heading">Panel heading</div>
+
+            <ul class="list-group" ng-repeat="uldata in tdata">
+                <li class="list-group-item success">
+                    <a type="button" href="#/storeViewPage/{{uldata.pile_no}}"
+                       ui-sref="navTemplate.storeView({storeno:uldata.pile_no})"
+                       class="btn btn-lg btn-block btn-{{uldata.state}}">
+                        <span class="label label-warning pull-left">
+                            {{uldata.slab_count}}</span>
+                        {{uldata.pile_no}}
+
+                        <span class="badge pull-right">{{uldata.row_no}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-4"  ng-repeat="server in serverIp">
+        <div class="panel panel-info" >
+
+            <div class="panel-heading">server:{{server}}</div>
+            <ul class="list-group" ng-repeat="uldata in tdata[$index]">
+                <li class="list-group-item success">
+                    <a type="button" class="btn btn-lg btn-block">
+                        <span class="label label-warning pull-left">
+                            {{uldata}}</span>
+                        {{uldata}}
+
+                        <span class="badge pull-right">{{uldata}}</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>

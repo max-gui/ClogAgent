@@ -48,6 +48,6 @@ app.get('/trans',function(req, res) {
 
 htmlApp.use(express.static(__dirname));
 
-app.listen(process.env.PORT || 4730);
+app.listen(process.env.PORT || 4731);
 
-htmlApp.listen(8080);//, '127.0.0.1');
+htmlApp.listen(8081);//, '127.0.0.1');

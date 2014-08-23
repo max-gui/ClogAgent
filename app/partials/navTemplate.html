@@ -8,27 +8,25 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">ClogAgent</a>
+
         </div>
 
     </div>
 </div>
 
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <div class="container">
-        <h1>欢迎使用</h1>
-        <p>ClogAgent</p>
-        <p><a class="btn btn-primary btn-lg" role="button">关于ClogAgent &raquo;</a></p>
-        <p><a class="btn btn-primary btn-lg" role="button" href="#/funcPage"
-              ng-click="setPassword()"  ui-sref="navTemplate.func()">
-            Just start &raquo;</a></p>
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="navbar-collapse collapse">
+
     </div>
-</div>
+</nav>
 
 <div class="container">
+    <div ui-view style="padding-top: 70px"></div>
 
 
-    <footer>
+    <hr>
+
+    <footer style="padding-bottom: 50px">
         <p>&copy; Ctrip 2014</p>
     </footer>
 </div> <!-- /container -->

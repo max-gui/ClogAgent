@@ -9,38 +9,46 @@ angular.module('myApp.controllers', []).directive('popover', function() {
 })
 .controller('homeCtrl', ['$scope','myData','$http','$state','$filter',
                          function($scope, myData, $http,$state,$filter) {
-                           /*
-                           $http.get('http://rest.logging.sh.ctriptravel.com/data/logs/340101',
-                                     {params:{
-                                       fromDate:'2014-08-19 20:45:20',
-                                       toDate:'2014-08-19 20:47:22',
-                                       logLevel:1,
-                                       hostName:'10.8.5.99',
-                                       tagKey:'logtype&tagValue=paymentinfo&tagKey=servicecode&tagValue=31000301'
 
 
-                                     },
-                                      timeout: 15000}).
-                            success(function(data) {
-                              if(data.Status == false){
-                                $state.go("login");
-                              }
-                            }).
-                            error(function(data,status){
-                              $state.go("login");
-                            });*/
 
+
+                         }])
+.controller('funcCtrl', ['$scope', '$state', '$http','myData',
+                         function($scope, $state, $http, myData) {
+                           $scope.tdata =
+                             [
+                             [0,1,2,3,4,5],
+                             [10,11,12,13,14,15],
+                             [20,21,22,23,24,25],
+                             [30,31,32,33,34,35],
+                             [40,41,42,43,44,45],
+                             [50,51,52,53,54,55]
+                           ]
+                           $scope.LevelArray =
+                             [
+                             {check:'active',state:true,name:'DEBUG'},
+                             {check:'',state:false,name:'INFO'},
+                             {check:'',state:false,name:'WARN'},
+                             {check:'',state:false,name:'ERROR'},
+                             {check:'',state:false,name:'FATAL'}
+                           ]
+
+                           $scope.TypeArray =
+                             [
+                             'OTHER','APP','URL','WEB_SERVICE','SQL','MEM_CACHED'
+                           ];
                            var apiTemp = 340101;
-                           var fromDate="2014-08-19%2020:45:20";
-                           var toDate="2014-08-19%2020:47:22";
-                           var logType = -1;//0-5&null
+                           var fromDate="2014-08-19%2020:45:20";//$filter('encodeUri')("2014-08-19%2020:45:20");
+                           var toDate="2014-08-19%2020:47:22";//$filter('encodeUri')("2014-08-19%2020:47:22");
+                           $scope.logType = {index: -1};//0-5&null
                            var tags =
                                [{tagKey:'logtype',
                                  tagValue:'paymentinfo'},
                                 {tagKey:'servicecode',
                                  tagValue:31000301}];
 
-                           var serverIp =
+                           $scope.serverIp =
                                ["10.8.5.99",
                                 "10.8.5.112",
                                 "10.8.5.113",
@@ -48,6 +56,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                 "10.8.5.39",
                                 "10.8.5.44"
                                ]
+
                            var logLevel=
                                [2,3];
 
@@ -56,9 +65,9 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                'fromDate=' + fromDate +
                                '&toDate=' + toDate;
 
-                           if (logType > -1){
+                           if ($scope.logType > -1){
                              url = url +
-                               '&logType=' + logtype;
+                               '&logType=' + $scope.logtype;
                            }
 
                            tags.forEach(
@@ -82,120 +91,41 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                              }
                            )
 
-                           serverIp.forEach(
-                             function(ip){
+                           var help = function(urlTmp,serverIndex){
+                             $http.get(urlTmp,{timeout: 300000}).
+                             success(function(data) {
+                               if(data.size == 100){
+                                 $scope.tdata[serverIndex].splice($scope.tdata[serverIndex].length,0,data)
+                                 help(urlTmp +
+                                      "&lastTimestamp=" + data.lastTimetamp +
+                                      "&lastScanRowKey=" + data.lastScanRowKey)
+                               }
+                             }).
+                             error(function(data,status){
+                               //alert("fuck!")
+                             });
+                           }
+
+                           var flag = true;
+                           $scope.serverIp.forEach(
+                             function(ip,index){
                                urlArr.forEach(
                                  function(urlE){
                                    var urlTmp = urlE +
                                        '&hostName=' + ip;
 
-                                   $http.get(urlTmp,{timeout: 30000}).
-                                   success(function(data) {
-                                     if(data.Status == false){
-                                       $state.go("login");
-                                     }
-                                   }).
-                                   error(function(data,status){
-                                     $state.go("login");
-                                   });
+                                   if (flag){
+                                     flag = false;
+                                     help(urlTmp,index)
+                                   }else{
+                                     flag = true;
+                                   }
                                  }
                                )
                              }
                            )
 
-                           /*
-                            $http.get('http://rest.logging.sh.ctriptravel.com/data/logs/340101?fromDate=2014-08-19%2020:45:20&toDate=2014-08-19%2020:47:22&logLevel=1&hostName=SH02SVR1860&tagKey=logtype&tagValue=paymentinfo&tagKey=servicecode&tagValue=31000301',
-                                      {timeout: 15000}).
-                            success(function(data) {
-                              if(data.Status == false){
-                                $state.go("login");
-                              }
-                            }).
-                            error(function(data,status){
-                              $state.go("login");
-                            });*/
                          }])
-.controller('funcCtrl', ['$scope', '$state', '$http','myData',
-                         function($scope, $state, $http, myData) {
-                           $scope.name = myData.name;
-                           //$rootScope.password = myData.password;
-                           var encrypt = new JSEncrypt();
-                           encrypt.setPublicKey(
-                             "-----BEGIN PUBLIC KEY-----" +
-                             "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC51FzMSexieGcfr2NJFT5QKcEz" +
-                             "gzpH5PIbe4NwZOc0pMD1Ez9vI69rUPes4jVdbYIragj7bk3xKMhwZ9m5bVm7Lnov" +
-                             "sBqjDO2Cm6vQyAw6jvHf3QjiM9j7io9JjVE/pNgZaECZhpN7XT8BPvM2C7w2Lftj" +
-                             "S6zKOEjpdLQADVW2BwIDAQAB" +
-                             "-----END PUBLIC KEY-----"
-                           );
-                           console.log(encrypt);
-
-                           var encrypted = encrypt.encrypt(myData.password);
-
-                           $http.post('http://win8dev/SycWeb/Login?userid=' + myData.name,
-                                      JSON.stringify(encrypted),
-                                      {timeout: 1500}).
-                           success(function(data) {
-                             if(data.Status == false){
-                               $state.go("login");
-                             }
-                           }).
-                           error(function(data,status){
-                             $state.go("login");
-                           });
-
-                         }])
-.controller('storageViewCtrl', ['$scope', '$stateParams','$http',
-                                function($scope, $stateParams, $http) {
-                                  $scope.storageNum = [1,2,3,4];
-                                  //$scope.scrollFlag = false;
-                                  function mySortRow(a,b){
-                                    return a.row_no - b.row_no;
-                                  }
-
-                                  function mySortCol(a,b){
-                                    return a.col_no - b.col_no;
-                                  }
-
-                                  $scope.getStorageInfo = function(Hallno) {
-                                    $http.get('http://win8dev/SycWeb/GetPilesByHallno/' + Hallno).success(function(data) {
-                                      var tabData= data.Data;
-                                      tabData.sort(mySortRow);
-
-                                      var tabColLeft = [],tabColRight = [];
-                                      tabData.forEach(
-                                        function(data){
-                                          var tmp = new Object();
-
-                                          if(data.lock_status  == 0)
-                                          {
-                                            data.state = "success";
-                                          }
-                                          else
-                                          {
-                                            data.state = "danger";
-                                          }
-
-                                          if(data.col_no == 1)
-                                          {
-                                            tmp.left = data;
-                                            tabColLeft.push(data);
-                                          }
-                                          else
-                                          {
-                                            tmp.right = data;
-                                            tabColRight.push(data);
-                                          }
-                                        }
-                                      );
-
-                                      $scope.tabDataLR = [];
-                                      $scope.tabDataLR.push(tabColLeft);
-                                      $scope.tabDataLR.push(tabColRight);
-                                    });
-                                  }
-
-                                }])
 .controller('storeViewCtrl', ['$scope', '$stateParams', '$state', '$http',
                               function($scope, $stateParams, $state, $http) {
 
