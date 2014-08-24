@@ -20,7 +20,7 @@
 
     "prestart": "npm install",
     "poststart": "http-server -p 8000",
-    "start": "node app/app.js",
+    "start": "node $relative_path_from_repo_dir/app/app.js",
 
     "pretest": "npm install",
     "test": "karma start test/karma.conf.js",
