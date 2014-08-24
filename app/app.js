@@ -45,7 +45,6 @@ app.get('/trans',function(req, res) {
         res.send(data);
     });
 });
-html.set
 
 htmlApp.use(express.static(__dirname));
 
