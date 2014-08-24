@@ -16,6 +16,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                          }])
 .controller('funcCtrl', ['$scope', '$state', '$http','myData',
                          function($scope, $state, $http, myData) {
+                           $scope.tagValuePairs = ""
                            $scope.tdata =
                              [
                              [0,1,2,3,4,5],
@@ -38,15 +39,10 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                              [
                              'OTHER','APP','URL','WEB_SERVICE','SQL','MEM_CACHED'
                            ];
-                           var apiTemp = 340101;
-                           var fromDate="2014-08-19%2020:45:20";//$filter('encodeUri')("2014-08-19%2020:45:20");
-                           var toDate="2014-08-19%2020:47:22";//$filter('encodeUri')("2014-08-19%2020:47:22");
+                           $scope.apiTemp = 340101;
+                           $scope.fromDate="2014-08-19%2020:45:20";//$filter('encodeUri')("2014-08-19%2020:45:20");
+                           $scope.toDate="2014-08-19%2020:47:22";//$filter('encodeUri')("2014-08-19%2020:47:22");
                            $scope.logType = {index: -1};//0-5&null
-                           var tags =
-                               [{tagKey:'logtype',
-                                 tagValue:'paymentinfo'},
-                                {tagKey:'servicecode',
-                                 tagValue:31000301}];
 
                            $scope.serverIp =
                                ["10.8.5.99",
@@ -57,73 +53,98 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                 "10.8.5.44"
                                ]
 
-                           var logLevel=
-                               [2,3];
+                           $scope.logSeach = function(){
+                             /*
+                             var logLevel=
+                                 [2,3];
+                             */
+                             var urlHead = 'http://rest.logging.sh.ctriptravel.com/data/logs/' + $scope.apiTemp + '?';
+                             var url = urlHead +
+                                 'fromDate=' + $scope.fromDate.replace(/T/, " ") +
+                                 '&toDate=' + $scope.toDate.replace(/T/, " ");
 
-                           var urlHead = 'http://rest.logging.sh.ctriptravel.com/data/logs/' + apiTemp + '?';
-                           var url = urlHead +
-                               'fromDate=' + fromDate +
-                               '&toDate=' + toDate;
-
-                           if ($scope.logType > -1){
-                             url = url +
-                               '&logType=' + $scope.logtype;
-                           }
-
-                           tags.forEach(
-                             function(data){
-
-                               url =
-                                 url +
-                                 '&tagKey=' +
-                                 data.tagKey +
-                                 '&tagValue=' +
-                                 data.tagValue
+                             if ($scope.logType.index > -1){
+                               url = url +
+                                 '&logType=' + $scope.logType.index;
                              }
-                           );
 
-                           var urlArr = [];
-                           logLevel.forEach(
-                             function(level){
-                               var urlTmp = url +
-                                   '&logLevel=' + level;
-                               urlArr.splice(0,0,urlTmp);
-                             }
-                           )
+                             url = url + '&' + $scope.tagValuePairs
+                             /*
+                             var tags =
+                                 [{tagKey:'logtype',
+                                   tagValue:'paymentinfo'},
+                                  {tagKey:'servicecode',
+                                   tagValue:31000301}];
 
-                           var help = function(urlTmp,serverIndex){
-                             $http.get(urlTmp,{timeout: 300000}).
-                             success(function(data) {
-                               if(data.size == 100){
-                                 $scope.tdata[serverIndex].splice($scope.tdata[serverIndex].length,0,data)
-                                 help(urlTmp +
-                                      "&lastTimestamp=" + data.lastTimetamp +
-                                      "&lastScanRowKey=" + data.lastScanRowKey)
+                             tags.forEach(
+                               function(data){
+
+                                 url =
+                                   url +
+                                   '&tagKey=' +
+                                   data.tagKey +
+                                   '&tagValue=' +
+                                   data.tagValue
                                }
-                             }).
-                             error(function(data,status){
-                               //alert("fuck!")
-                             });
+                             );
+                             */
+
+                             var urlArr = [];
+                             /*
+                             logLevel.forEach(
+                               function(level){
+                                 var urlTmp = url +
+                                     '&logLevel=' + level;
+                                 urlArr.splice(0,0,urlTmp);
+                               }
+                             )
+                             */
+                             $scope.LevelArray.forEach(
+                               function(level,index){
+                                 if(level.state == true){
+                                   var urlTmp = url +
+                                       '&logLevel=' + index;
+                                   urlArr.splice(0,0,urlTmp);
+                                 }
+                               }
+                             )
+
+                             var help = function(urlTmp,serverIndex){
+                               $http.get(urlTmp,{timeout: 300000}).
+                               success(function(data) {
+                                 if(data.size == 100){
+                                   $scope.tdata[serverIndex].splice($scope.tdata[serverIndex].length,0,data)
+                                   help(urlTmp +
+                                        "&lastTimestamp=" + data.lastTimetamp +
+                                        "&lastScanRowKey=" + data.lastScanRowKey)
+                                 }
+                               }).
+                               error(function(data,status){
+                                 //alert("fuck!")
+                               });
+                             }
+
+                             //var flag = true;
+                             $scope.serverIp.forEach(
+                               function(ip,index){
+                                 urlArr.forEach(
+                                   function(urlE){
+                                     var urlTmp = urlE +
+                                         '&hostName=' + ip;
+
+                                     //if (flag){
+                                       //flag = false;
+                                       help(urlTmp,index)
+                                     //}else{
+                                       //flag = true;
+                                     //}
+                                   }
+                                 )
+                               }
+                             )
                            }
 
-                           var flag = true;
-                           $scope.serverIp.forEach(
-                             function(ip,index){
-                               urlArr.forEach(
-                                 function(urlE){
-                                   var urlTmp = urlE +
-                                       '&hostName=' + ip;
 
-                                   if (flag){
-                                     flag = false;
-                                     help(urlTmp,index)
-                                   }else{
-                                     flag = true;
-                                   }
-                                 }
-                               )
-                             }
-                           )
 
                          }])
 .controller('storeViewCtrl', ['$scope', '$stateParams', '$state', '$http',

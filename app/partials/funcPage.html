@@ -19,9 +19,18 @@
         </div><!-- /input-group -->
     </div><!-- /.col-lg-6 -->
 </div>
-
+<br/>
 <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-12">
+        <div class="input-group">
+            <span class="input-group-addon">tag&value pairs</span>
+            <input ng-model="tagValuePairs" type="text" class="form-control">
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+</div>
+<br/>
+<div class="row">
+    <div class="col-lg-4">
         <div class="input-group">
             <span class="label label-default">日志级别</span>
             <div class="btn-group" ng-repeat="level in LevelArray">
@@ -30,7 +39,7 @@
         </div><!-- /input-group -->
     </div>
 
-    <div class="col-lg-7">
+    <div class="col-lg-6">
         <div class="input-group">
             <span class="label label-default">日志类型</span>
             <div class="btn-group" ng-repeat="type in TypeArray">
@@ -38,31 +47,13 @@
             </div>
         </div><!-- /input-group -->
     </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-6" ng-repeat="tdata in tabDataLR">
-        <div class="panel panel-default" >
-            <!-- Default panel contents -->
-            <div class="panel-heading">Panel heading</div>
-
-            <ul class="list-group" ng-repeat="uldata in tdata">
-                <li class="list-group-item success">
-                    <a type="button" href="#/storeViewPage/{{uldata.pile_no}}"
-                       ui-sref="navTemplate.storeView({storeno:uldata.pile_no})"
-                       class="btn btn-lg btn-block btn-{{uldata.state}}">
-                        <span class="label label-warning pull-left">
-                            {{uldata.slab_count}}</span>
-                        {{uldata.pile_no}}
-
-                        <span class="badge pull-right">{{uldata.row_no}}</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <div class="col-lg-2">
+        <button type="button" class="btn btn-primary" ng-click="logSeach()">Start</button>
     </div>
 </div>
-
+<br/>
+{{logType.index}}
 <div class="row">
     <div class="col-xs-4"  ng-repeat="server in serverIp">
         <div class="panel panel-info" >
