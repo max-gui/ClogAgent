@@ -48,6 +48,6 @@ app.get('/trans',function(req, res) {
 
 htmlApp.use(express.static(__dirname));
 
-app.listen(process.env.OPENSHIFT_NODEJS_PORT);
+app.listen(process.env.OPENSHIFT_NODEJS_PORT,process.env.OPENSHIFT_NODEJS_IP);
 
-//htmlApp.listen(process.env.OPENSHIFT_NODEJS_PORT || 15001);//, '127.0.0.1');
+htmlApp.listen(15001, process.env.OPENSHIFT_NODEJS_IP);//, '127.0.0.1');
