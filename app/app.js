@@ -45,9 +45,10 @@ app.get('/trans',function(req, res) {
         res.send(data);
     });
 });
+html.set
 
 htmlApp.use(express.static(__dirname));
 
-app.listen(process.env.OPENSHIFT_NODEJS_PORT,process.env.OPENSHIFT_NODEJS_IP);
+app.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080,process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');
 
 htmlApp.listen(15001, process.env.OPENSHIFT_NODEJS_IP);//, '127.0.0.1');
