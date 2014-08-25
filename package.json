@@ -16,7 +16,7 @@
     "node-rest-client": "0.8.6"
   },
   "scripts": {
-    "postinstall": "export HOME=$HOME/app-root/runtime/repo; bower install",
+    "postinstall": "export HOME=$HOME/app-root/runtime/repo/; bower install",
 
     "prestart": "npm install",
     "poststart": "http-server -p 8000",

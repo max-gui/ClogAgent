@@ -12,8 +12,7 @@ angular.module('myApp', [
   'ui.sortable',
   'ui.tree',
   'infinite-scroll',
-  'dataServices',
-  'rt.encodeuri'
+  'dataServices'
 ]).
 config(['$stateProvider', '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {

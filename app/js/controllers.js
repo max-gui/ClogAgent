@@ -37,12 +37,12 @@ angular.module('myApp.controllers', []).directive('popover', function() {
 
                            $scope.TypeArray =
                              [
-                             'OTHER','APP','URL','WEB_SERVICE','SQL','MEM_CACHED'
+                             'ALL','OTHER','APP','URL','WEB_SERVICE','SQL','MEM_CACHED'
                            ];
                            $scope.apiTemp = 340101;
                            $scope.fromDate="2014-08-19%2020:45:20";//$filter('encodeUri')("2014-08-19%2020:45:20");
                            $scope.toDate="2014-08-19%2020:47:22";//$filter('encodeUri')("2014-08-19%2020:47:22");
-                           $scope.logType = {index: -1};//0-5&null
+                           $scope.logType = {index: 0};//0-5&null
 
                            $scope.serverIp =
                                ["10.8.5.99",
@@ -63,9 +63,9 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                  'fromDate=' + $scope.fromDate.replace(/T/, " ") + ":00" +
                                  '&toDate=' + $scope.toDate.replace(/T/, " ") + ":00";
 
-                             if ($scope.logType.index > -1){
+                             if ($scope.logType.index > 0 ){
                                url = url +
-                                 '&logType=' + $scope.logType.index;
+                                 '&logType=' + $scope.logType.index - 1;
                              }
 
                              url = url + '&' + $scope.tagValuePairs
