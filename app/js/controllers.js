@@ -45,13 +45,13 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                            $scope.logType = {index: 0};//0-5&null
 
                            $scope.serverIp =
-                               ["10.8.5.99",
-                                "10.8.5.112",
-                                "10.8.5.113",
-                                "10.8.5.36",
-                                "10.8.5.39",
-                                "10.8.5.44"
-                               ]
+                             ["SH02SVR2626",//"10.8.5.99",
+                              "SH02SVR1860",// "10.8.5.112",
+                              "SH02SVR1199",// "10.8.5.113",
+                              "VMS05885",// "10.8.5.36",
+                              "VMS05908",// "10.8.5.39",
+                              "VMS05909",// "10.8.5.44"
+                             ]
 
                            $scope.logSeach = function(){
                              /*
