@@ -30,7 +30,7 @@
 </div>
 <br/>
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-5">
         <div class="input-group">
             <span class="label label-default">日志级别</span>
             <div class="btn-group" ng-repeat="level in LevelArray">
@@ -48,12 +48,12 @@
         </div><!-- /input-group -->
     </div>
 
-    <div class="col-lg-2">
+    <div class="col-lg-1">
         <button type="button" class="btn btn-primary" ng-click="logSeach()">Start</button>
     </div>
 </div>
 <br/>
-{{logType.index}}
+
 <div class="row">
     <div class="col-xs-4"  ng-repeat="server in serverIp">
         <div class="panel panel-info" >
