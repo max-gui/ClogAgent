@@ -65,7 +65,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
 
                              if ($scope.logType.index > 0 ){
                                url = url +
-                                 '&logType=' + $scope.logType.index - 1;
+                                 '&logType=' + ($scope.logType.index - 1);
                              }
 
                              url = url + '&' + $scope.tagValuePairs
