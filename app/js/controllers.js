@@ -60,8 +60,8 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                              */
                              var urlHead = 'http://rest.logging.sh.ctriptravel.com/data/logs/' + $scope.apiTemp + '?';
                              var url = urlHead +
-                                 'fromDate=' + $scope.fromDate.replace(/T/, " ") +
-                                 '&toDate=' + $scope.toDate.replace(/T/, " ");
+                                 'fromDate=' + $scope.fromDate.replace(/T/, " ") + ":00" +
+                                 '&toDate=' + $scope.toDate.replace(/T/, " ") + ":00";
 
                              if ($scope.logType.index > -1){
                                url = url +
