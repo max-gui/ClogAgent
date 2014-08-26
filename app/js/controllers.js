@@ -16,7 +16,17 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                          }])
 .controller('funcCtrl', ['$scope', '$state', '$http','myData',
                          function($scope, $state, $http, myData) {
-                           $scope.test= {as:12,bc:'sdfa',de:true}
+                           $scope.showMessage = function(flag,index){
+                             var fTmp = !flag
+                             $scope.tdata.data[index].showFlag = fTmp
+                             if(flag){
+                               $scope.tdata.data[index].flagTag = "plus"
+                             }else{
+                               $scope.tdata.data[index].flagTag = "minus"
+                             }
+
+                             return fTmp
+                           }
 
                            $scope.pageInfo =
                              {
@@ -30,8 +40,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                {url:'',nextInfo:{lts:'',lsrk:''},pageIndex:0}]}
 
                            $scope.tagValuePairs = ''
-                           $scope.tdata = [
-                             {data:[]},{data:[]},{data:[]},{data:[]},{data:[]},{data:[]}]
+                           $scope.tdata = {data:[]}
 
                            $scope.LevelArray = [
                              {check:'active',state:true,name:'DEBUG'},
@@ -71,22 +80,41 @@ angular.module('myApp.controllers', []).directive('popover', function() {
 
                              $http.get(urlTmp,{timeout: 300000}).
                              success(function(data) {
+                               data.logs.forEach(function(val,index){
+                                 var dataTmp = val
+                                 var dataMod = dataTmp
+                                 var messageTmp = angular.fromJson(dataTmp.message)
+                                 dataMod.message = messageTmp
+                                 dataMod.message.Request = angular.fromJson(messageTmp.Request)
+                                 dataMod.message.Response = angular.fromJson(messageTmp.Response)
+                                 dataMod.showFlag = false
+                                 dataMod.flagTag = 'plus'
+
+                                 var attArrTmp = []
+                                 dataMod.attributes.forEach(function(tag){
+                                   var keyTmp = tag.key
+                                   if (keyTmp == "uid" ||
+                                       keyTmp=="orderid"||
+                                       keyTmp =="servicecode"||
+                                       keyTmp=="bustype"||
+                                       keyTmp == "platform"){
+                                     tag.info = "warning"
+                                     attArrTmp.unshift(tag)
+                                   }else{
+                                     tag.info = "primary"
+                                     attArrTmp.push(tag)
+                                   }})
+
+
+
+                                 $scope.tdata.data.push(dataMod)
+
+                                 //$scope.showFlag = false
+                                 if(index == 0){
+                                   console.log(dataMod)
+                                 }
+                               })
                                if(data.size == 100){
-                                 data.logs.forEach(function(val,index){
-                                   var dataTmp = val
-                                   var dataMod = dataTmp
-                                   var messageTmp = angular.fromJson(dataTmp.message)
-                                   dataMod.message = messageTmp
-                                   dataMod.message.Request = angular.fromJson(messageTmp.Request)
-                                   dataMod.message.Response = angular.fromJson(messageTmp.Response)
-
-                                   $scope.tdata[serverIndex].data.splice(
-                                     $scope.tdata[serverIndex].data.length,0,dataMod)
-                                   if(index == 0){
-                                     console.log(dataMod)
-                                   }
-                                 })
-
 
                                  //$scope.tdata[serverIndex] = $scope.tdata[serverIndex].concat(dataMod)
                                  //console.log(dataTmp[0])
