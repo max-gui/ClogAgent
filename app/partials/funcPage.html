@@ -54,23 +54,24 @@
 </div>
 <br/>
 
-<div class="row">
-    <div class="col-xs-4"  ng-repeat="server in serverIp">
-        <div class="panel panel-info" >
+<div class="row" ng-repeat="server in serverIp">
+    <div class="panel panel-info" ng-repeat="uldata in tdata[$index].data">
 
-            <div class="panel-heading">server:{{server}}</div>
-            <ul class="list-group" ng-repeat="uldata in tdata[$index]">
-                <li class="list-group-item success">
-                    <a type="button" class="btn btn-lg btn-block">
-                        <span class="label label-warning pull-left">
-                            {{uldata}}</span>
-                        {{uldata}}
-
-                        <span class="badge pull-right">{{uldata}}</span>
-                    </a>
-                </li>
-            </ul>
-
+        <div class="panel-heading">server:{{server}}</div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <pre>{{uldata|json}}</pre>
+            </div>
         </div>
+
     </div>
+</div>
+<br/>
+
+{{pageInfo.pageIndex}}
+<div class="row">
+    <ul class="pager pagination-sm">
+        <li class="previous"><a ng-click="preData()">&larr; Older</a></li>
+        <li class="next"><a ng-click="nextData()">Newer &rarr;</a></li>
+    </ul>
 </div>
