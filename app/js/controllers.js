@@ -17,15 +17,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
 .controller('funcCtrl', ['$scope', '$state', '$http','myData',
                          function($scope, $state, $http, myData) {
                            $scope.tags = [
-                             {
-                               text: 'Tag1=aa'
-                             },
-                             {
-                               text: 'Tag2=bb'
-                             },
-                             {
-                               text: 'Tag3=cc'
-                             }
+
                            ]
 
                            $scope.loadTags = function(query){
