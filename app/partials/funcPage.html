@@ -20,12 +20,15 @@
     </div><!-- /.col-lg-6 -->
 </div>
 <br/>
+
+<tags model="foo">
+</tags>
 <div class="row">
     <div class="col-lg-12">
-        <div class="input-group">
-            <span class="input-group-addon">tag&value pairs</span>
-            <input ng-model="tagValuePairs" type="text" class="form-control">
-        </div><!-- /input-group -->
+        <tags-input ng-model="tags" placehoder="add a tag=value pair">
+            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+        </tags-input>
+        <!-- /input-group -->
     </div><!-- /.col-lg-6 -->
 </div>
 <br/>
@@ -55,33 +58,34 @@
 <br/>
 
 <div class="row" infinite-scroll="addMoreItems()">
-    <div class="panel panel-info" ng-repeat="uldata in showData.data">
+    <div class="col-md-6" ng-repeat="uldata in showData.data">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-11">
+                        <span class="badge" data-toggle="tooltip" data-placement="top" title="日志级别">{{uldata.logLevel}}</span>
+                        <span class="badge" data-toggle="tooltip" data-placement="top" title="日志类型">{{uldata.logType}}</span>
+                        <span class="badge" data-toggle="tooltip" data-placement="top" title="Time">
+                            {{uldata.message.StartTime}}</span>
+                        <span class="badge"  data-toggle="tooltip" data-placement="top" title="hostIp">
+                            {{uldata.hostIP}}</span>
 
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-md-11">
-                    <span class="badge" data-toggle="tooltip" data-placement="top" title="日志级别">{{uldata.logLevel}}</span>
-                    <span class="badge" data-toggle="tooltip" data-placement="top" title="日志类型">{{uldata.logType}}</span>
-                    <span class="badge" data-toggle="tooltip" data-placement="top" title="Time">
-                        {{uldata.message.StartTime}}</span>
-                    <span class="badge"  data-toggle="tooltip" data-placement="top" title="hostIp">
-                        {{uldata.hostIP}}</span>
-
-                    <span class="label label-{{tag.info}}" data-toggle="tooltip" data-placement="top" title="{{tag.key}}" ng-repeat="tag in uldata.attributes">
-                        {{tag.value}}</span>
-                    <span class="label label-primary" data-toggle="tooltip" data-placement="top" title="{{appId}}">
-                        {{uldata.appId}}</span>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-xs btn-default" ng-click="uldata.showFlag = showMessage(uldata.showFlag,$index)">
-                        <span class="glyphicon glyphicon-{{uldata.flagTag}}-sign"></span>
-                    </button>
+                        <span class="label label-{{tag.info}}" style="display:inline-block" data-toggle="tooltip" data-placement="top" title="{{tag.key}}" ng-repeat="tag in uldata.attributes">
+                            {{tag.value}}</span>
+                        <span class="label label-primary" data-toggle="tooltip" data-placement="top" title="appId">
+                            {{uldata.appId}}</span>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-xs btn-default" ng-click="uldata.showFlag = showMessage(uldata.showFlag,$index)">
+                            <span class="glyphicon glyphicon-{{uldata.flagTag}}-sign"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="panel-body animate-show" ng-show="uldata.showFlag">
-            <pre>{{uldata.message|json}}</pre>
-        </div>
+            <div class="panel-body animate-show" ng-show="uldata.showFlag">
+                <pre>{{uldata.message|json}}</pre>
+            </div>
 
+        </div>
     </div>
 </div>

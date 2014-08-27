@@ -1,0 +1,11 @@
+[
+  {"text":"servicecode"},
+  {"text":"guid"},
+  {"text":"orderid"},
+  {"text":"platform"},
+  {"text":"uid"},
+  {"text":"bustype"},
+  {"text":"logtype"},
+  {"text":"serviceversion"},
+  {"text":"_title_"}
+]

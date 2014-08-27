@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "1.2.x",
+    "angular": "1.2.23",
     "angular-loader": "1.2.x",
     "html5-boilerplate": "~4.3.0",
     "angular-mocks": "~1.2.15",
@@ -22,6 +22,9 @@
     "ui-sortable": "https://github.com/angular-ui/ui-sortable/raw/master/src/sortable.js",
     "jsencrypt": "2.1.0",
     "angular-encode-uri": "1.0.0",
-    "angular-ui-utils": "0.1.1"
+    "angular-ui-utils": "0.1.1",
+    "angular-ui-bootstrap-bower": "~0.6.0",
+    "angular-ui-bootstrap": "0.11.0",
+    "ng-tags-input": "2.0.1"
   }
 }

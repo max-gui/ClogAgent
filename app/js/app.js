@@ -13,8 +13,8 @@ angular.module('myApp', [
   'ui.tree',
   'infinite-scroll',
   'dataServices',
-  'rt.encodeuri',
-  'ui.utils'
+  'ui.utils',
+  'ngTagsInput'
 ]).
 config(['$stateProvider', '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {

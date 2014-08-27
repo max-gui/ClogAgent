@@ -16,16 +16,42 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                          }])
 .controller('funcCtrl', ['$scope', '$state', '$http','myData',
                          function($scope, $state, $http, myData) {
+                           $scope.tags = [
+                             {
+                               text: 'Tag1=aa'
+                             },
+                             {
+                               text: 'Tag2=bb'
+                             },
+                             {
+                               text: 'Tag3=cc'
+                             }
+                           ]
+
+                           $scope.loadTags = function(query){
+                             var tmp = $http.get('tags.json')
+
+                             return tmp
+                           }
+
                            var dataReady = function(data,count){
+
                              var dTmp = data.data.slice(data.showIndex,data.showIndex + count)
 
                              dTmp.forEach(function(val,index){
                                var dataTmp = val
                                var dataMod = dataTmp
-                               var messageTmp = angular.fromJson(dataTmp.message)
-                               dataMod.message = messageTmp
-                               dataMod.message.Request = angular.fromJson(messageTmp.Request)
-                               dataMod.message.Response = angular.fromJson(messageTmp.Response)
+                               try{
+
+                                 var messageTmp = angular.fromJson(dataTmp.message)
+
+                                 dataMod.message = messageTmp
+                                 dataMod.message.Request = angular.fromJson(messageTmp.Request)
+                                 dataMod.message.Response = angular.fromJson(messageTmp.Response)
+                               }
+                               catch(err){
+                                 console.log('message is not a json object')
+                               }
                                dataMod.showFlag = false
                                dataMod.flagTag = 'plus'
 
@@ -43,8 +69,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                    tag.info = "primary"
                                    attArrTmp.push(tag)
                                  }})
-
-
+                               dataMod.attributes = attArrTmp
 
                                $scope.showData.data.push(dataMod)
 
@@ -61,7 +86,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                            $scope.showData = {data:[]}
                            $scope.addMoreItems = function() {
                              $scope.tdata.forEach(function(e){
-                                console.log("boss,i'm in!")
+                               console.log("boss,i'm in!")
                                dataReady(e,10)
                              })
 
@@ -178,6 +203,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                            }
 
                            $scope.logSeach = function(){
+                             $scope.tagValuePairs = ''
                              $scope.tdata = [
                                {data:[],showIndex:0},{data:[],showIndex:0},
                                {data:[],showIndex:0},{data:[],showIndex:0},
@@ -198,27 +224,15 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                  '&logType=' + ($scope.logType.index - 1);
                              }
 
+                             $scope.tags.forEach(function(kv){
+                               $scope.tagValuePairs = $scope.tagValuePairs +
+                                 'tagKey=' + kv.text.replace(/=/, '&tagValue=') + '&'
+                             })
+
+                             $scope.tagValuePairs = $scope.tagValuePairs.slice(0,-1);
+
                              url = url + '&' + $scope.tagValuePairs
                              url = url + '&lastTimestamp=&lastScanRowKey='
-                             /*
-                             var tags =
-                                 [{tagKey:'logtype',
-                                   tagValue:'paymentinfo'},
-                                  {tagKey:'servicecode',
-                                   tagValue:31000301}];
-
-                             tags.forEach(
-                               function(data){
-
-                                 url =
-                                   url +
-                                   '&tagKey=' +
-                                   data.tagKey +
-                                   '&tagValue=' +
-                                   data.tagValue
-                               }
-                             );
-                             */
 
                              var urlArr = [];
                              /*
