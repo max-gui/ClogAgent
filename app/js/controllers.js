@@ -16,6 +16,9 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                          }])
 .controller('funcCtrl', ['$scope', '$state', '$http','myData',
                          function($scope, $state, $http, myData) {
+
+                           $scope.scrollCheckFlag = false
+
                            $scope.tags = [
 
                            ]
@@ -73,15 +76,28 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                              })
 
                              data.showIndex += count
+                             if (data.showIndex > data.data.length){
+                               data.endFlag = true
+                             }
                            }
 
                            $scope.showData = {data:[]}
                            $scope.addMoreItems = function() {
-                             $scope.tdata.forEach(function(e){
-                               console.log("boss,i'm in!")
-                               dataReady(e,10)
-                             })
+                             if(!$scope.scrollCheckFlag)
+                             {
+                               var enableFlag = true
+                               $scope.tdata.forEach(function(e){
+                                 console.log("boss,i'm in!")
+                                 if (e.endFlag != true){
+                                   dataReady(e,10)
+                                 }else{
+                                 }
 
+                                 enableFlag = enableFlag && e.endFlag
+                               })
+
+                               $scope.scrollCheckFlag = enableFlag
+                             }
                            }
 
                            $scope.showMessage = function(flag,index){
@@ -109,13 +125,16 @@ angular.module('myApp.controllers', []).directive('popover', function() {
 
                            $scope.tagValuePairs = ''
                            $scope.tdata = [
-                             {data:[],showIndex:0},{data:[],showIndex:0},
-                             {data:[],showIndex:0},{data:[],showIndex:0},
-                             {data:[],showIndex:0},{data:[],showIndex:0}]
+                             {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.99'},
+                             {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.112'},
+                             {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.113'},
+                             {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.36'},
+                             {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.39'},
+                             {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.44'}]
 
                            $scope.LevelArray = [
-                             {check:'active',state:true,name:'DEBUG'},
-                             {check:'',state:false,name:'INFO'},
+                             {check:'',state:false,name:'DEBUG'},
+                             {check:'active',state:true,name:'INFO'},
                              {check:'',state:false,name:'WARN'},
                              {check:'',state:false,name:'ERROR'},
                              {check:'',state:false,name:'FATAL'}]
@@ -126,7 +145,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                            $scope.apiTemp = 340101;
                            $scope.fromDate='2014-08-19%2020:45:20';//$filter('encodeUri')('2014-08-19%2020:45:20');
                            $scope.toDate='2014-08-19%2020:47:22';//$filter('encodeUri')('2014-08-19%2020:47:22');
-                           $scope.logType = {index: 0};//0-5&null
+                           $scope.logType = {index: 2};//0-5&null
 
                            $scope.serverIp = [
                              'SH02SVR2626',//'10.8.5.99',
@@ -149,12 +168,15 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                  help(info.url,index,info.nextInfo.lts,info.nextInfo.lsrk,true)})}
 
                            var help = function(urlTmp,serverIndex,lts,lsrk,loadOrNot){
-
+                             $scope.tdata[serverIndex].progress = 30
                              $http.get(urlTmp,{timeout: 300000}).
                              success(function(data) {
+                               $scope.scrollCheckFlag = false
 
                                $scope.tdata[serverIndex].data = $scope.tdata[serverIndex].data.concat(data.logs)
-
+                               $scope.tdata[serverIndex].endFlag = false
+                               $scope.tdata[serverIndex].progress = 100
+                               $scope.tdata[serverIndex].state = 'success'
                                if(loadOrNot){
                                  dataReady($scope.tdata[serverIndex],2)
                                }
@@ -173,6 +195,9 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                }
                              }).
                              error(function(data,status){
+
+                               $scope.tdata[serverIndex].progress = 100
+                               $scope.tdata[serverIndex].state = 'danger'
                                //alert('fuck!')
                              });
                            }
@@ -195,11 +220,15 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                            }
 
                            $scope.logSeach = function(){
+                             $scope.scrollCheckFlag = false
                              $scope.tagValuePairs = ''
                              $scope.tdata = [
-                               {data:[],showIndex:0},{data:[],showIndex:0},
-                               {data:[],showIndex:0},{data:[],showIndex:0},
-                               {data:[],showIndex:0},{data:[],showIndex:0}]
+                               {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.99'},
+                               {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.112'},
+                               {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.113'},
+                               {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.36'},
+                               {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.39'},
+                               {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.44'}]
 
                              $scope.showData = {data:[]}
                              /*
