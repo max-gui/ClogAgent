@@ -1,10 +1,4 @@
-var aa = [1,2,3,4]
+var a ='dfasdfsdatags'
+var l = a.length
 
-aa.forEach(function(e,index){
-           if (e%2 == 0){
-  aa.splice(
-    index,1,e)
-}
-})
-
-aa
+var a = a.slice(0,a.length) + '&ddfsad'

@@ -1,4 +1,3 @@
-# angular-seed — the seed for AngularJS apps
 # this project is for ctrip internal tools,help everyone to handle log interface more efficiently.
 
 ### Install Dependencies

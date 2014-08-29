@@ -50,4 +50,4 @@ htmlApp.use(express.static(__dirname));
 
 //app.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080,process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');
 //htmlApp.listen(8080);
-htmlApp.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080,process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');//, '127.0.0.1');
+htmlApp.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080, process.env.IP || process.env.OPENSHIFT_NODEJS_IP);// || '127.0.0.1');//, '127.0.0.1');
