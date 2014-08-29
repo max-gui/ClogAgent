@@ -26,7 +26,8 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.113'},
                                {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.36'},
                                {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.39'},
-                               {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.44'}]
+                               {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.44'},
+                               {data:[],showIndex:0,endFlag:false,progress:0,state:'success',ip:'10.8.5.25'}]
 
                              $scope.showData = {data:[]}
                            }
@@ -42,6 +43,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                {
 
                                infoArr:[
+                                 {url:'',nextInfo:'',lastIndex:0},
                                  {url:'',nextInfo:'',lastIndex:0},
                                  {url:'',nextInfo:'',lastIndex:0},
                                  {url:'',nextInfo:'',lastIndex:0},
@@ -70,7 +72,8 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                'SH02SVR1199',// '10.8.5.113',
                                'VMS05885',// '10.8.5.36',
                                'VMS05908',// '10.8.5.39',
-                               'VMS05909']// '10.8.5.44'
+                               'VMS05909',// '10.8.5.44'
+                               'SH02SVR1636']// '10.8.5.25'
                            }
 
                            init()

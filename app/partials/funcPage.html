@@ -56,13 +56,15 @@
 <br/>
 
 <div class="row">
-    <div class="col-md-2"  ng-repeat="pdata in tdata">
-        <div class="progress">
-            <div class="progress-bar progress-bar-{{pdata.state}}" style="width: {{pdata.progress}}%">
-                hostIp: {{pdata.ip}}
+    <ul class="list-inline">
+        <li  ng-repeat="pdata in tdata">
+            <div class="progress">
+                <div class="progress-bar progress-bar-{{pdata.state}}" style="width: {{pdata.progress}}%">
+                    hostIp: {{pdata.ip}}
+                </div>
             </div>
-        </div>
-    </div>
+        </li>
+    </ul>
 </div>
 
 <div class="row" infinite-scroll="addMoreItems()" infinite-scroll-disabled="true && {{scrollCheckFlag}}">
