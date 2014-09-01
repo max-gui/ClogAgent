@@ -64,16 +64,6 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 url: "/funcPage",
                 templateUrl: "partials/funcPage.html",
                 controller: 'funcCtrl'
-              }).
-              state('navTemplate.storageView', {
-                url: "/storageViewPage",
-                templateUrl: "partials/storageViewPage.html",
-                controller: 'storageViewCtrl'
-              }).
-              state('navTemplate.storeView', {
-                url: "/storeViewPage/:storeno",
-                templateUrl: "partials/storeViewPage.html",
-                controller: 'storeViewCtrl'
               });
             }]).
 directive('popover', function() {

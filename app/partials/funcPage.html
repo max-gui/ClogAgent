@@ -1,4 +1,4 @@
-<div class="row">
+<div id="top" class="row">
     <div class="col-lg-3">
         <div class="input-group">
             <span class="input-group-addon">appId</span>
@@ -118,13 +118,15 @@
 
 
 <footer class="navbar navbar-fixed-bottom">
+
+    <a class="btn btn-sm btn-inline" ng-click="backToTop()">返回顶部</a>
     <div class="container">
         <ul class="list-inline">
             <li  ng-repeat="pdata in tdata">
                 <div class="progress">
                     <div class="progress-bar progress-bar-{{pdata.state}}"
                          style="width: {{pdata.progress}}%">
-                        <a class="btn btn-xs" ng-click="filterEFire(pdata.ip)">
+                        <a class="btn btn-sm" ng-click="filterEFire(pdata.ip)">
                             hostIp: {{pdata.ip}}
                         </a>
                     </div>

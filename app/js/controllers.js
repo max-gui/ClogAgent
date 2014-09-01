@@ -14,8 +14,13 @@ angular.module('myApp.controllers', []).directive('popover', function() {
 
 
                          }])
-.controller('funcCtrl', ['$scope', '$state', '$http','myData','$filter',
-                         function($scope, $state, $http, myData,$filter) {
+.controller('funcCtrl', ['$scope', '$state', '$http','myData','$filter','$location','$anchorScroll',
+                         function($scope, $state, $http, myData,$filter,$location,$anchorScroll) {
+                           $scope.backToTop = function(){
+                             $location.hash('top')
+                             $anchorScroll()
+                           }
+
                            $scope.filterEFire = function(e){
                              if($scope.ipFilter != e){
                                $scope.ipFilter = e
