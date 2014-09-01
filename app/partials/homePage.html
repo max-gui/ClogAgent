@@ -18,7 +18,18 @@
     <div class="container">
         <h1>欢迎使用</h1>
         <p>ClogAgent</p>
-        <p><a class="btn btn-primary btn-lg" role="button">关于ClogAgent &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" data-toggle="collapse" data-target="#about" role="button">关于ClogAgent &raquo;</a></p>
+        <div id="about" class="panel panel-info collapse">
+            <div class="panel-heading">
+                <h4 class="panel-title">a simple tool to make your life easier with the Clog system</h4>
+            </div>
+            <div class="panel-body">
+                <p class="">
+                    this project is for ctrip internal tools,help everyone to handle log interface more efficiently.
+                </p>
+            </div>
+        </div>
+
         <p><a class="btn btn-primary btn-lg" role="button" href="#/funcPage"
               ng-click="setPassword()"  ui-sref="navTemplate.func()">
             Just start &raquo;</a></p>
