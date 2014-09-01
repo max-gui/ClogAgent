@@ -18,19 +18,6 @@ var app = angular.module('myApp', [
   'ui.bootstrap.datetimepicker',
   'sticky'
 ]);
-app.filter('startsWithLetter', function () {
-  return function (items, letter) {
-    var filtered = [];
-    var letterMatch = new RegExp(letter, 'i');
-    items.forEach(function(e){
-      if (letterMatch.test(e.name.substring(0, 1))) {
-        filtered.push(e);
-      }
-    })
-
-    return filtered;
-  };
-});
 
 app.filter('hostIpFilter',function(){
   return function(items,hostIp) {

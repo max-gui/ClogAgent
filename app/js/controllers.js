@@ -24,19 +24,6 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                              }
                            }
 
-                           $scope.letter = 'm';
-                           $scope.friends = [{
-                             name: 'Andrew'
-                           }, {
-                             name: 'Will'
-                           }, {
-                             name: 'Mark'
-                           }, {
-                             name: 'Alice'
-                           }, {
-                             name: 'Todd'
-                           }];
-
                            $scope.setSameEnd = function(newDate,oldDate){
                              $scope.selctTime.toDate = newDate
                            }
