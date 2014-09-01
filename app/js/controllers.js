@@ -14,10 +14,45 @@ angular.module('myApp.controllers', []).directive('popover', function() {
 
 
                          }])
-.controller('funcCtrl', ['$scope', '$state', '$http','myData',
-                         function($scope, $state, $http, myData) {
-                           var clearDate = function()
+.controller('funcCtrl', ['$scope', '$state', '$http','myData','$filter',
+                         function($scope, $state, $http, myData,$filter) {
+                           $scope.filterEFire = function(e){
+                             if($scope.ipFilter != e){
+                               $scope.ipFilter = e
+                             }else{
+                               $scope.ipFilter = ''
+                             }
+                           }
+
+                           $scope.letter = 'm';
+                           $scope.friends = [{
+                             name: 'Andrew'
+                           }, {
+                             name: 'Will'
+                           }, {
+                             name: 'Mark'
+                           }, {
+                             name: 'Alice'
+                           }, {
+                             name: 'Todd'
+                           }];
+
+                           $scope.setSameEnd = function(newDate,oldDate){
+                             $scope.selctTime.toDate = newDate
+                           }
+
+                           $scope.setDateTimeToNow = function(){
+                             var dateTmp = new Date()
+
+                             $scope.selctTime = {
+                               fromDate : dateTmp,
+                               toDate: dateTmp}
+                           }
+
+                           var clearData = function()
                            {
+                             $scope.ipFilter = ''
+
                              $scope.scrollCheckFlag = false
                              $scope.tagValuePairs = ''
                              $scope.tdata = [
@@ -33,7 +68,9 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                            }
 
                            var init = function(){
-                             clearDate()
+                             clearData()
+
+                             $scope.setDateTimeToNow()
 
                              $scope.tags = [
 
@@ -213,15 +250,16 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                            }
 
                            $scope.logSeach = function(){
-                             clearDate()
+
+                             clearData()
                              /*
                              var logLevel=
                                  [2,3];
                              */
                              var urlHead = 'http://rest.logging.sh.ctriptravel.com/data/logs/' + $scope.apiTemp + '?';
                              var url = urlHead +
-                                 'fromDate=' + $scope.fromDate.replace(/T/, ' ') + ':00' +
-                                 '&toDate=' + $scope.toDate.replace(/T/, ' ') + ':00';
+                                 'fromDate=' + $filter('date')(Date.parse($scope.selctTime.fromDate),'yyyy-MM-dd hh:mm:ss') +
+                                 '&toDate=' + $filter('date')(Date.parse($scope.selctTime.toDate),'yyyy-MM-dd hh:mm:ss');
 
                              if ($scope.logType.index > 0 ){
                                url = url +
