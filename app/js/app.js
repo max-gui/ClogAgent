@@ -9,8 +9,6 @@ var app = angular.module('myApp', [
   'myApp.directives',
   'myApp.controllers',
   'ui.router',
-  'ui.sortable',
-  'ui.tree',
   'infinite-scroll',
   'dataServices',
   'ui.utils',
