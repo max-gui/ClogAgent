@@ -258,8 +258,8 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                              */
                              var urlHead = 'http://rest.logging.sh.ctriptravel.com/data/logs/' + $scope.apiTemp + '?';
                              var url = urlHead +
-                                 'fromDate=' + $filter('date')(Date.parse($scope.selctTime.fromDate),'yyyy-MM-dd hh:mm:ss') +
-                                 '&toDate=' + $filter('date')(Date.parse($scope.selctTime.toDate),'yyyy-MM-dd hh:mm:ss');
+                                 'fromDate=' + $filter('date')(Date.parse($scope.selctTime.fromDate),'yyyy-MM-dd HH:mm:ss') +
+                                 '&toDate=' + $filter('date')(Date.parse($scope.selctTime.toDate),'yyyy-MM-dd HH:mm:ss');
 
                              if ($scope.logType.index > 0 ){
                                url = url +
