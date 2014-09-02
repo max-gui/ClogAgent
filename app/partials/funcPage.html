@@ -82,7 +82,7 @@
 
 <div class="row" infinite-scroll="addMoreItems()" infinite-scroll-disabled="true && {{scrollCheckFlag}}">
     <div class="col-md-6" ng-repeat="uldata in showData.data | hostIpFilter:ipFilter">
-        <div class="panel panel-info">
+        <div id="{{uldata.positionTag}}" class="panel panel-info">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-md-11">
@@ -119,7 +119,7 @@
 
 <footer class="navbar navbar-fixed-bottom">
 
-    <a class="btn btn-sm btn-inline" ng-click="backToTop()">返回顶部</a>
+    <a class="btn btn-sm btn-inline" ng-click="backToElement()">返回节点</a>
     <div class="container">
         <ul class="list-inline">
             <li  ng-repeat="pdata in tdata">

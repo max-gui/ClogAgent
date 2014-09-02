@@ -14,10 +14,18 @@ angular.module('myApp.controllers', []).directive('popover', function() {
 
 
                          }])
+.controller('navCtrl',['$scope','$location','$anchorScroll',
+            function($scope,$location,$anchorScroll){
+              $scope.backToTop = function(){
+                $location.hash('top')
+                $anchorScroll()
+              }
+            }])
 .controller('funcCtrl', ['$scope', '$state', '$http','myData','$filter','$location','$anchorScroll',
                          function($scope, $state, $http, myData,$filter,$location,$anchorScroll) {
-                           $scope.backToTop = function(){
-                             $location.hash('top')
+
+                           $scope.backToElement = function(){
+                             $location.hash('logPosition')
                              $anchorScroll()
                            }
 
@@ -133,6 +141,7 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                                }
                                dataMod.showFlag = false
                                dataMod.flagTag = 'plus'
+                               dataMod.positionTag = ''
 
                                var attArrTmp = []
                                dataMod.attributes.forEach(function(tag){
@@ -170,8 +179,10 @@ angular.module('myApp.controllers', []).directive('popover', function() {
                              $scope.showData.data[index].showFlag = fTmp
                              if(flag){
                                $scope.showData.data[index].flagTag = "plus"
+                               $scope.showData.data[index].positionTag = ''
                              }else{
                                $scope.showData.data[index].flagTag = "minus"
+                               $scope.showData.data[index].positionTag = 'logPosition'
                              }
 
                              return fTmp

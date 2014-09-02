@@ -56,7 +56,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
               state('navTemplate', {
                 url: "/navTemplate",
                 templateUrl: "partials/navTemplate.html",
-                controller: ''//'funcCtrl'
+                controller: 'navCtrl'
               }).
               state('navTemplate.func', {
                 url: "/funcPage",
