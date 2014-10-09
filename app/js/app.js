@@ -34,8 +34,8 @@ app.filter('hostIpFilter',function(){
     }
   }
 })
-app.config(['$stateProvider', '$urlRouterProvider',
-            function($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',
+            function($stateProvider, $urlRouterProvider,$locationProvider) {
               //$urlRouterProvider.when('/loginPage', {templateUrl: 'partials/loginPage.html', controller: 'loginCtrl'});
               //$urlRouterProvider.when('/funcPage/:name/:password', {templateUrl: 'partials/funcPage.html', controller: 'funcCtrl'});
               //$urlRouterProvider.when('/storageViewPage', {templateUrl: 'partials/storageViewPage.html', controller: 'storageViewCtrl'});
@@ -43,6 +43,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
               //$urlRouterProvider.otherwise({redirectTo: '/loginPage'});
 
               // For any unmatched url, redirect to /state1
+              //$locationProvider.html5Mode(true);
               $urlRouterProvider.otherwise("/homePage");
 
               //
